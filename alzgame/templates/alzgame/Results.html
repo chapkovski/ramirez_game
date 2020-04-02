@@ -2,10 +2,32 @@
 {% load otree static %}
 
 {% block title %}
-    Page title
+    Results
 {% endblock %}
 
 {% block content %}
+    {% for foo in answer %}
+        <table class="table table-striped table-hover">
+            <tr>
+                <td>{{ foo.letter }}</td>
+                <td>{{ foo.created }}</td>
+                <td>
+                    {% if foo.answered %}
+                        {{ foo.answered }}
+                    {% else %}
+                        No answer
+                    {% endif %}
+
+                </td>
+                <td> {% if foo.answer %}
+                    {{ foo.answer }}
+                {% else %}
+                    No answer
+                {% endif %}</td>
+            </tr>
+
+        </table>
+    {% endfor %}
 
     {% next_button %}
 {% endblock %}

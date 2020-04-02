@@ -1,19 +1,20 @@
 from otree.api import Currency as c, currency_range
 from ._builtin import Page, WaitPage
 from .models import Constants
-
+import urllib
+import json
 
 class MyPage(Page):
-    pass
+    form_model = 'player'
+    form_fields = ['answer']
 
-
-class ResultsWaitPage(WaitPage):
-    def after_all_players_arrive(self):
-        pass
+    def before_next_page(self):
+        self.player.answer = urllib.parse.unquote(self.player.answer)
 
 
 class Results(Page):
-    pass
+    def vars_for_template(self) -> dict:
+        return dict(answer=json.loads(self.player.answer))
 
 
-page_sequence = [MyPage, ResultsWaitPage, Results]
+page_sequence = [MyPage, Results]
